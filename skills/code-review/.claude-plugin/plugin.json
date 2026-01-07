@@ -1,0 +1,5 @@
+{
+  "name": "code-review",
+  "description": "보안, 성능, 유지보수성 관점의 코드 리뷰. 코드 리뷰, PR 리뷰 요청 시 활성화됩니다.",
+  "version": "1.0.0"
+}

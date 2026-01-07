@@ -1,0 +1,5 @@
+{
+  "name": "api-design",
+  "description": "RESTful API 및 GraphQL 스키마 설계. API 설계, 엔드포인트 정의 요청 시 활성화됩니다.",
+  "version": "1.0.0"
+}

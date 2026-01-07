@@ -1,0 +1,5 @@
+{
+  "name": "test-generator",
+  "description": "단위/통합/E2E 테스트 생성. 테스트 작성, 테스트 커버리지 요청 시 활성화됩니다.",
+  "version": "1.0.0"
+}

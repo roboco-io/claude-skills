@@ -1,0 +1,12 @@
+{
+  "name": "roboco-skills",
+  "description": "Claude Code 스킬 모음 - 보안 리뷰, 코드 리뷰, API 설계, 테스트 생성 등",
+  "plugins": [
+    "skills/security-review",
+    "skills/code-review",
+    "skills/api-design",
+    "skills/test-generator",
+    "skills/korean-docs",
+    "skills/git-workflow"
+  ]
+}
