@@ -39,6 +39,14 @@ Git 워크플로우 및 협업 관련
 |------|------|
 | [korean-docs](plugins/documentation/skills/korean-docs) | 전문적인 한국어 기술 문서 작성 |
 
+### Memory
+
+세션 간 컨텍스트 영속성 관련
+
+| 플러그인 | 설명 |
+|----------|------|
+| [ralph-mem](https://github.com/roboco-io/ralph-mem) | Ralph Loop 기반 반복 실행 및 세션 간 컨텍스트 영속성 관리 |
+
 ## 설치 방법
 
 ### 방법 1: Marketplace 등록 후 설치

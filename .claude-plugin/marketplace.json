@@ -50,6 +50,16 @@
       "skills": [
         "./plugins/documentation/skills/korean-docs/SKILL.md"
       ]
+    },
+    {
+      "name": "ralph-mem",
+      "source": {
+        "source": "github",
+        "repo": "roboco-io/ralph-mem"
+      },
+      "version": "1.0.0",
+      "description": "Ralph Loop 기반 반복 실행 및 세션 간 컨텍스트 영속성 관리",
+      "category": "memory"
     }
   ]
 }
