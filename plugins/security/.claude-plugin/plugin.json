@@ -1,0 +1,6 @@
+{
+  "name": "security",
+  "description": "OWASP Top 10 2025 기반 보안 리뷰 및 취약점 분석 스킬",
+  "version": "1.0.0",
+  "category": "security"
+}

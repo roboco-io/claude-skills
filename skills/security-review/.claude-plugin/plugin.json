@@ -1,5 +1,0 @@
-{
-  "name": "security-review",
-  "description": "OWASP Top 10 2025 기반 보안 취약점 검토. 보안 리뷰, 취약점 분석 요청 시 활성화됩니다.",
-  "version": "1.0.0"
-}

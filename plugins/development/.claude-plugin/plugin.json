@@ -1,0 +1,6 @@
+{
+  "name": "development",
+  "description": "코드 리뷰, API 설계, 테스트 생성 등 개발 관련 스킬 모음",
+  "version": "1.0.0",
+  "category": "development"
+}

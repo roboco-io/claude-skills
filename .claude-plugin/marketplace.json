@@ -1,41 +1,55 @@
 {
   "name": "roboco-plugins",
   "owner": {
-    "name": "roboco-io"
+    "name": "roboco-io",
+    "url": "https://github.com/roboco-io"
   },
   "metadata": {
-    "description": "Claude Code 플러그인 모음 - Skills, Commands, Agents, Hooks"
+    "description": "Claude Code 플러그인 모음 - Skills, Commands, Agents, Hooks",
+    "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "security-review",
-      "source": "./skills/security-review",
-      "description": "OWASP Top 10 2025 기반 보안 취약점 검토"
+      "name": "development",
+      "source": "./plugins/development",
+      "version": "1.0.0",
+      "description": "코드 리뷰, API 설계, 테스트 생성 등 개발 관련 스킬",
+      "category": "development",
+      "skills": [
+        "./plugins/development/skills/code-review/SKILL.md",
+        "./plugins/development/skills/api-design/SKILL.md",
+        "./plugins/development/skills/test-generator/SKILL.md"
+      ]
     },
     {
-      "name": "code-review",
-      "source": "./skills/code-review",
-      "description": "보안, 성능, 유지보수성 관점의 코드 리뷰"
+      "name": "security",
+      "source": "./plugins/security",
+      "version": "1.0.0",
+      "description": "OWASP Top 10 2025 기반 보안 리뷰 및 취약점 분석",
+      "category": "security",
+      "skills": [
+        "./plugins/security/skills/security-review/SKILL.md"
+      ]
     },
     {
-      "name": "api-design",
-      "source": "./skills/api-design",
-      "description": "RESTful API 및 GraphQL 스키마 설계"
+      "name": "workflow",
+      "source": "./plugins/workflow",
+      "version": "1.0.0",
+      "description": "Git 워크플로우, 브랜치 전략, 커밋 컨벤션",
+      "category": "workflow",
+      "skills": [
+        "./plugins/workflow/skills/git-workflow/SKILL.md"
+      ]
     },
     {
-      "name": "test-generator",
-      "source": "./skills/test-generator",
-      "description": "단위/통합/E2E 테스트 생성"
-    },
-    {
-      "name": "korean-docs",
-      "source": "./skills/korean-docs",
-      "description": "전문적인 한국어 기술 문서 작성"
-    },
-    {
-      "name": "git-workflow",
-      "source": "./skills/git-workflow",
-      "description": "Git 브랜치 전략 및 커밋 컨벤션 가이드"
+      "name": "documentation",
+      "source": "./plugins/documentation",
+      "version": "1.0.0",
+      "description": "한국어 기술 문서 작성",
+      "category": "documentation",
+      "skills": [
+        "./plugins/documentation/skills/korean-docs/SKILL.md"
+      ]
     }
   ]
 }
