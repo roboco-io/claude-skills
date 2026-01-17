@@ -60,6 +60,7 @@ Git 워크플로우 및 협업 관련
 /plugin install security@roboco-plugins
 /plugin install workflow@roboco-plugins
 /plugin install documentation@roboco-plugins
+/plugin install ralph-mem@roboco-plugins
 ```
 
 ### 방법 2: 대화형 UI로 설치
