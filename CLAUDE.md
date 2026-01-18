@@ -54,6 +54,36 @@ plugins/
 
 **주의**: `plugins` 배열 항목은 문자열이 아닌 객체여야 함.
 
+### 외부 플러그인 추가
+
+npm 또는 GitHub에서 외부 플러그인을 참조할 수 있음:
+
+```json
+{
+  "name": "external-plugin",
+  "source": {
+    "source": "npm",
+    "package": "package-name"
+  },
+  "version": "1.0.0",
+  "description": "설명",
+  "category": "category"
+}
+```
+
+```json
+{
+  "name": "external-plugin",
+  "source": {
+    "source": "github",
+    "repo": "owner/repo"
+  },
+  "version": "1.0.0",
+  "description": "설명",
+  "category": "category"
+}
+```
+
 ### SKILL.md 구조
 
 ```markdown
