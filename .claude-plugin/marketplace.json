@@ -45,10 +45,13 @@
       "name": "documentation",
       "source": "./plugins/documentation",
       "version": "1.0.0",
-      "description": "한국어 기술 문서 작성",
+      "description": "한국어 기술 문서 작성 및 Q&A 기록",
       "category": "documentation",
       "skills": [
-        "./plugins/documentation/skills/korean-docs/SKILL.md"
+        "./plugins/documentation/skills/korean-docs/SKILL.md",
+        "./plugins/documentation/skills/qa/SKILL.md",
+        "./plugins/documentation/skills/qa-list/SKILL.md",
+        "./plugins/documentation/skills/qa-merge/SKILL.md"
       ]
     },
     {
