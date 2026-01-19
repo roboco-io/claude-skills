@@ -34,6 +34,7 @@ plugins/
 1. `plugins/{category}/.claude-plugin/plugin.json` 생성
 2. `plugins/{category}/skills/{name}/SKILL.md` 생성 (YAML frontmatter 포함)
 3. `.claude-plugin/marketplace.json`의 `plugins` 배열에 추가
+4. `README.md`의 플러그인 목록 업데이트 (아래 규칙 참조)
 
 ### marketplace.json 스키마
 
@@ -103,6 +104,32 @@ SKILL.md는 500줄 이하로 유지하고, 상세 내용은 `references/` 디렉
 
 - SKILL.md에서 `[file.md](references/file.md)` 형식으로 참조
 - Claude가 필요할 때만 참조 파일을 로드함
+
+### README.md 동기화 규칙
+
+플러그인 추가/수정 시 `README.md`의 "플러그인 목록" 섹션을 업데이트:
+
+1. **데이터 소스**: `.claude-plugin/marketplace.json`과 각 `SKILL.md`의 frontmatter
+2. **카테고리별 섹션**: marketplace.json의 `category` 필드 기준으로 그룹화
+3. **스킬 정보 추출**:
+   - `name`: SKILL.md frontmatter의 `name`
+   - `description`: SKILL.md frontmatter의 `description` (한국어로 요약)
+   - `link`: `plugins/{category}/skills/{skill-name}` 경로
+4. **외부 플러그인**: `source`가 객체인 경우 (npm/github) 별도 표기
+   - npm: 패키지명 링크
+   - github: 레포지토리 링크
+
+**테이블 형식:**
+
+```markdown
+### {Category 이름}
+
+{카테고리 설명}
+
+| 스킬 | 설명 |
+|------|------|
+| [skill-name](plugins/category/skills/skill-name) | 스킬 설명 |
+```
 
 ## Testing
 

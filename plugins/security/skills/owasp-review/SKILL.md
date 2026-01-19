@@ -1,5 +1,5 @@
 ---
-name: security-review
+name: owasp-review
 description: Perform security code reviews based on OWASP Top 10 2025. Use this skill when users request security review, vulnerability assessment, or ask to check their code for security issues. Supports JavaScript/TypeScript, Python, Java, and Go.
 ---
 

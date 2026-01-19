@@ -21,7 +21,7 @@ Skills, Commands, Agents, Hooks 등 다양한 플러그인을 제공합니다.
 
 | 스킬 | 설명 |
 |------|------|
-| [security-review](plugins/security/skills/security-review) | OWASP Top 10 2025 기반 보안 취약점 검토 |
+| [owasp-review](plugins/security/skills/owasp-review) | OWASP Top 10 2025 기반 보안 취약점 검토 |
 
 ### Workflow
 
@@ -33,11 +33,14 @@ Git 워크플로우 및 협업 관련
 
 ### Documentation
 
-문서 작성 관련
+한국어 기술 문서 작성 및 Q&A 기록
 
 | 스킬 | 설명 |
 |------|------|
 | [korean-docs](plugins/documentation/skills/korean-docs) | 전문적인 한국어 기술 문서 작성 |
+| [qa](plugins/documentation/skills/qa) | 기술/수학적 개념 Q&A 기록 |
+| [qa-list](plugins/documentation/skills/qa-list) | 저장된 Q&A 문서 목록 표시 |
+| [qa-merge](plugins/documentation/skills/qa-merge) | Q&A 문서를 통합 레퍼런스로 병합 |
 
 ### Memory
 
@@ -89,7 +92,7 @@ git clone https://github.com/roboco-io/plugins.git
 
 **예시:**
 
-- "이 코드 보안 검토해줘" → `security-review` 스킬 활성화
+- "이 코드 보안 검토해줘" → `owasp-review` 스킬 활성화
 - "이 코드 리뷰해줘" → `code-review` 스킬 활성화
 - "사용자 API 설계해줘" → `api-design` 스킬 활성화
 - "이 함수에 대한 테스트 작성해줘" → `test-generator` 스킬 활성화

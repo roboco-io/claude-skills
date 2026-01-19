@@ -28,7 +28,7 @@
       "description": "OWASP Top 10 2025 기반 보안 리뷰 및 취약점 분석",
       "category": "security",
       "skills": [
-        "./plugins/security/skills/security-review/SKILL.md"
+        "./plugins/security/skills/owasp-review/SKILL.md"
       ]
     },
     {
