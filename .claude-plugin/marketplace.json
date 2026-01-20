@@ -57,8 +57,8 @@
         "source": "npm",
         "package": "ralph-mem"
       },
-      "version": "0.1.6",
-      "description": "Ralph Loop 기반 반복 실행 및 세션 간 컨텍스트 영속성 관리",
+      "version": "0.1.10",
+      "description": "Persistent context management with Ralph Loop execution engine",
       "category": "memory"
     }
   ]
