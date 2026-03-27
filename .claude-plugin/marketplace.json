@@ -18,17 +18,25 @@
       "skills": [
         "./plugins/development/skills/code-review/SKILL.md",
         "./plugins/development/skills/api-design/SKILL.md",
-        "./plugins/development/skills/test-generator/SKILL.md"
+        "./plugins/development/skills/test-generator/SKILL.md",
+        "./plugins/development/skills/draw-diagram/SKILL.md"
       ]
     },
     {
       "name": "security",
       "source": "./plugins/security",
       "version": "1.0.0",
-      "description": "OWASP Top 10 2025 기반 보안 리뷰 및 취약점 분석",
+      "description": "OWASP Top 10 2025 기반 보안 리뷰, AWS Well-Architected Framework 리뷰",
       "category": "security",
       "skills": [
-        "./plugins/security/skills/owasp-review/SKILL.md"
+        "./plugins/security/skills/owasp-review/SKILL.md",
+        "./plugins/security/skills/aws-well-architected/SKILL.md",
+        "./plugins/security/skills/aws-wa-operational-excellence/SKILL.md",
+        "./plugins/security/skills/aws-wa-security/SKILL.md",
+        "./plugins/security/skills/aws-wa-reliability/SKILL.md",
+        "./plugins/security/skills/aws-wa-performance/SKILL.md",
+        "./plugins/security/skills/aws-wa-cost/SKILL.md",
+        "./plugins/security/skills/aws-wa-sustainability/SKILL.md"
       ]
     },
     {

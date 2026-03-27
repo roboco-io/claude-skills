@@ -27,6 +27,10 @@ plugins/
             └── references/       # Progressive disclosure용 참조 파일 (선택)
 ```
 
+### 스킬 간 호출 관계
+
+`aws-well-architected` 스킬은 오케스트레이터로서 6개 Pillar별 하위 스킬(`aws-wa-*`)을 호출하고 통합 리포트를 생성함. 이처럼 스킬이 다른 스킬을 호출하는 패턴이 존재하므로, 오케스트레이터 스킬 수정 시 하위 스킬의 인터페이스(입출력 형식)가 유지되는지 확인 필요.
+
 ## Plugin Development
 
 ### 새 플러그인 추가 시 필수 작업
@@ -53,7 +57,10 @@ plugins/
 }
 ```
 
-**주의**: `plugins` 배열 항목은 문자열이 아닌 객체여야 함.
+**주의사항:**
+- `plugins` 배열 항목은 문자열이 아닌 객체여야 함
+- 로컬 플러그인의 `source`는 문자열 경로, 외부 플러그인의 `source`는 `{ "source": "npm"|"github", ... }` 객체
+- `skills` 배열의 경로는 marketplace.json 기준 상대 경로
 
 ### 외부 플러그인 추가
 
@@ -62,10 +69,7 @@ npm 또는 GitHub에서 외부 플러그인을 참조할 수 있음:
 ```json
 {
   "name": "external-plugin",
-  "source": {
-    "source": "npm",
-    "package": "package-name"
-  },
+  "source": { "source": "npm", "package": "package-name" },
   "version": "1.0.0",
   "description": "설명",
   "category": "category"
@@ -75,15 +79,29 @@ npm 또는 GitHub에서 외부 플러그인을 참조할 수 있음:
 ```json
 {
   "name": "external-plugin",
-  "source": {
-    "source": "github",
-    "repo": "owner/repo"
-  },
+  "source": { "source": "github", "repo": "owner/repo" },
   "version": "1.0.0",
   "description": "설명",
   "category": "category"
 }
 ```
+
+외부 플러그인은 `skills` 배열이 없으며, `source` 객체로 로컬/외부를 구분함.
+
+### plugin.json 스키마
+
+각 카테고리 디렉토리의 `.claude-plugin/plugin.json` 최소 필드:
+
+```json
+{
+  "name": "category-name",
+  "description": "카테고리 설명",
+  "version": "1.0.0",
+  "category": "category-name"
+}
+```
+
+`name`은 marketplace.json의 해당 항목 `name`과 일치해야 함.
 
 ### SKILL.md 구조
 
@@ -97,6 +115,8 @@ description: 스킬 설명. Claude가 언제 이 스킬을 사용해야 하는�
 
 [지침 내용]
 ```
+
+`description`은 Claude가 스킬 선택에 사용하므로, **트리거 조건을 구체적으로** 기술할 것.
 
 ### Progressive Disclosure
 

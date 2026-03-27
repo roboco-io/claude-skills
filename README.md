@@ -14,14 +14,22 @@ Skills, Commands, Agents, Hooks 등 다양한 플러그인을 제공합니다.
 | [code-review](plugins/development/skills/code-review) | 보안, 성능, 유지보수성 관점의 코드 리뷰 |
 | [api-design](plugins/development/skills/api-design) | RESTful API 및 GraphQL 스키마 설계 |
 | [test-generator](plugins/development/skills/test-generator) | 단위/통합/E2E 테스트 생성 |
+| [draw-diagram](plugins/development/skills/draw-diagram) | Draw.io (.drawio) 형식의 다이어그램 생성 (AWS 아이콘 지원) |
 
 ### Security
 
-보안 리뷰 및 취약점 분석
+보안 리뷰, 취약점 분석, AWS Well-Architected Framework 리뷰
 
 | 스킬 | 설명 |
 |------|------|
 | [owasp-review](plugins/security/skills/owasp-review) | OWASP Top 10 2025 기반 보안 취약점 검토 |
+| [aws-well-architected](plugins/security/skills/aws-well-architected) | AWS Well-Architected Framework 리뷰 오케스트레이터 |
+| [aws-wa-operational-excellence](plugins/security/skills/aws-wa-operational-excellence) | 운영 효율성 Pillar 리뷰 |
+| [aws-wa-security](plugins/security/skills/aws-wa-security) | 보안 Pillar 리뷰 |
+| [aws-wa-reliability](plugins/security/skills/aws-wa-reliability) | 안정성 Pillar 리뷰 |
+| [aws-wa-performance](plugins/security/skills/aws-wa-performance) | 성능 효율성 Pillar 리뷰 |
+| [aws-wa-cost](plugins/security/skills/aws-wa-cost) | 비용 최적화 Pillar 리뷰 |
+| [aws-wa-sustainability](plugins/security/skills/aws-wa-sustainability) | 지속 가능성 Pillar 리뷰 |
 
 ### Workflow
 
@@ -96,6 +104,7 @@ git clone https://github.com/roboco-io/plugins.git
 - "이 코드 리뷰해줘" → `code-review` 스킬 활성화
 - "사용자 API 설계해줘" → `api-design` 스킬 활성화
 - "이 함수에 대한 테스트 작성해줘" → `test-generator` 스킬 활성화
+- "인프라 코드 Well-Architected 리뷰해줘" → `aws-well-architected` 스킬 활성화
 
 ## 플러그인 구조
 
