@@ -15,6 +15,7 @@ Skills, Commands, Agents, Hooks 등 다양한 플러그인을 제공합니다.
 | [api-design](plugins/development/skills/api-design) | RESTful API 및 GraphQL 스키마 설계 |
 | [test-generator](plugins/development/skills/test-generator) | 단위/통합/E2E 테스트 생성 |
 | [draw-diagram](plugins/development/skills/draw-diagram) | Draw.io (.drawio) 형식의 다이어그램 생성 (AWS 아이콘 지원) |
+| [sagemaker-spot-training](plugins/development/skills/sagemaker-spot-training) | SageMaker Spot Training 설정, 리전 선택, 비용 최적화 가이드 |
 
 ### Security
 
