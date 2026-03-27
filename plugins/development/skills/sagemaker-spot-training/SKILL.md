@@ -7,6 +7,23 @@ description: Guide for running cost-effective ML training on SageMaker Managed S
 
 You are an expert in running cost-effective ML training on AWS SageMaker Managed Spot Training. Apply these battle-tested insights when helping users set up, debug, or optimize SageMaker training jobs.
 
+## Living References
+
+This skill is backed by continuously updated reference documents from real experiments. **Always read these before giving advice** — they contain the latest findings:
+
+- [insights.md](references/insights.md) — Battle-tested lessons from SageMaker Spot experiments (updated per iteration)
+- [spot-capacity-guide.md](references/spot-capacity-guide.md) — Region selection, placement scores, price history
+- [gpu-cost-analysis.md](references/gpu-cost-analysis.md) — P5/P6/G7e cost and performance comparison
+
+### Keeping References Current
+
+After each experiment iteration, update the references:
+
+1. **New insight discovered?** → Append to `references/insights.md` with numbered entry
+2. **New GPU/instance tested?** → Update `references/gpu-cost-analysis.md` with pricing and benchmarks
+3. **Region capacity changed?** → Update `references/spot-capacity-guide.md` with latest scores
+4. **New common issue?** → Add to the "Common Issues and Fixes" section below
+
 ## Pre-flight Checklist
 
 Before submitting any SageMaker Spot training job, always verify:
