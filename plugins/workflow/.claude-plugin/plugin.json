@@ -1,6 +1,6 @@
 {
   "name": "workflow",
   "description": "Git 워크플로우, 브랜치 전략, 커밋 컨벤션, TiDD(Ticket Driven Development) 가이드",
-  "version": "0.1.0-alpha",
+  "version": "0.2.0-beta",
   "category": "workflow"
 }

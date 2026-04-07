@@ -40,6 +40,7 @@ Git 워크플로우 및 협업 관련
 |------|------|
 | [git-workflow](plugins/workflow/skills/git-workflow) | Git 브랜치 전략 및 커밋 컨벤션 가이드 |
 | [tidd](plugins/workflow/skills/tidd) | TiDD(Ticket Driven Development) - No Ticket, No Commit 원칙 강제 훅 |
+| [intent-engineering](plugins/workflow/skills/intent-engineering) | Intent Document(INTENT.md) 생성 및 관리 - Why/What/Not/Learnings 기반 프로젝트 의도 문서화 |
 
 ### Documentation
 
