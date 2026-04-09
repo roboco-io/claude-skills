@@ -1,5 +1,5 @@
 ---
-name: intent-engineering
+name: intent
 description: |
   Intent Document(INTENT.md) 생성 및 관리 스킬. 프로젝트의 의도를 Why/What/Not/Learnings로 문서화하고, 탐구와 학습을 통해 의도를 진화시키는 생명주기를 관리한다.
   반드시 사용해야 하는 경우: "intent document", "INTENT.md", "intent engineering", "프로젝트 의도 정리", "왜 만드는지 정리", "프로젝트 목적 문서화", "What/Why/Not 정리", "프로젝트 방향 잡기", "피벗", "프로젝트 종료 판단" 등을 언급하거나, 새 프로젝트를 시작하면서 방향을 잡고 싶다고 할 때. 기존 INTENT.md를 수정하거나 학습 결과를 기록하고 싶을 때도 이 스킬을 사용한다.
