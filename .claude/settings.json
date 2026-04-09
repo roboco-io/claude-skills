@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(git:*)",
+      "Bash(jq:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npm test:*)",
+      "Bash(npm ci:*)",
+      "Bash(npm run:*)",
+      "Bash(gh:*)",
+      "Bash(chmod:*)",
+      "Bash(file:*)",
+      "Bash(readlink:*)",
+      "Edit(.claude-plugin/**)",
+      "Edit(plugins/**)",
+      "Edit(CLAUDE.md)",
+      "Edit(README.md)",
+      "Edit(CHANGELOG.md)",
+      "Edit(package.json)",
+      "Edit(.github/**)",
+      "Edit(vitest.config.ts)",
+      "Write(plugins/**)",
+      "Write(.claude-plugin/**)",
+      "Write(CHANGELOG.md)",
+      "Write(LICENSE)",
+      "Write(.github/**)",
+      "Write(src/**)",
+      "Write(vitest.config.ts)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$TOOL_INPUT\" | grep -qE 'marketplace\\.json|SKILL\\.md'; then echo 'marketplace.json 또는 SKILL.md가 변경되었습니다. README.md 동기화가 필요한지 확인하세요.'; fi; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

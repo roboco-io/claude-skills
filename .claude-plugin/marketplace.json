@@ -16,10 +16,10 @@
       "description": "코드 리뷰, API 설계, 테스트 생성 등 개발 관련 스킬",
       "category": "development",
       "skills": [
-        "./plugins/development/skills/code-review/SKILL.md",
-        "./plugins/development/skills/api-design/SKILL.md",
-        "./plugins/development/skills/test-generator/SKILL.md",
-        "./plugins/development/skills/draw-diagram/SKILL.md"
+        "./skills/code-review/SKILL.md",
+        "./skills/api-design/SKILL.md",
+        "./skills/test-generator/SKILL.md",
+        "./skills/draw-diagram/SKILL.md"
       ]
     },
     {
@@ -29,14 +29,14 @@
       "description": "OWASP Top 10 2025 기반 보안 리뷰, AWS Well-Architected Framework 리뷰",
       "category": "security",
       "skills": [
-        "./plugins/security/skills/owasp-review/SKILL.md",
-        "./plugins/security/skills/aws-well-architected/SKILL.md",
-        "./plugins/security/skills/aws-wa-operational-excellence/SKILL.md",
-        "./plugins/security/skills/aws-wa-security/SKILL.md",
-        "./plugins/security/skills/aws-wa-reliability/SKILL.md",
-        "./plugins/security/skills/aws-wa-performance/SKILL.md",
-        "./plugins/security/skills/aws-wa-cost/SKILL.md",
-        "./plugins/security/skills/aws-wa-sustainability/SKILL.md"
+        "./skills/owasp-review/SKILL.md",
+        "./skills/aws-well-architected/SKILL.md",
+        "./skills/aws-wa-operational-excellence/SKILL.md",
+        "./skills/aws-wa-security/SKILL.md",
+        "./skills/aws-wa-reliability/SKILL.md",
+        "./skills/aws-wa-performance/SKILL.md",
+        "./skills/aws-wa-cost/SKILL.md",
+        "./skills/aws-wa-sustainability/SKILL.md"
       ]
     },
     {
@@ -46,9 +46,9 @@
       "description": "Git 워크플로우, 브랜치 전략, 커밋 컨벤션",
       "category": "workflow",
       "skills": [
-        "./plugins/workflow/skills/git-workflow/SKILL.md",
-        "./plugins/workflow/skills/tidd/SKILL.md",
-        "./plugins/workflow/skills/intent-engineering/SKILL.md"
+        "./skills/git-workflow/SKILL.md",
+        "./skills/tidd/SKILL.md",
+        "./skills/intent-engineering/SKILL.md"
       ]
     },
     {
@@ -58,10 +58,10 @@
       "description": "한국어 기술 문서 작성 및 Q&A 기록",
       "category": "documentation",
       "skills": [
-        "./plugins/documentation/skills/korean-docs/SKILL.md",
-        "./plugins/documentation/skills/qa/SKILL.md",
-        "./plugins/documentation/skills/qa-list/SKILL.md",
-        "./plugins/documentation/skills/qa-merge/SKILL.md"
+        "./skills/korean-docs/SKILL.md",
+        "./skills/qa/SKILL.md",
+        "./skills/qa-list/SKILL.md",
+        "./skills/qa-merge/SKILL.md"
       ]
     },
     {

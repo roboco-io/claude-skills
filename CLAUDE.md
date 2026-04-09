@@ -51,7 +51,7 @@ plugins/
       "name": "category-name",
       "source": "./plugins/category-name",
       "category": "category",
-      "skills": ["./plugins/category-name/skills/skill-name/SKILL.md"]
+      "skills": ["./skills/skill-name/SKILL.md"]
     }
   ]
 }
@@ -60,7 +60,7 @@ plugins/
 **주의사항:**
 - `plugins` 배열 항목은 문자열이 아닌 객체여야 함
 - 로컬 플러그인의 `source`는 문자열 경로, 외부 플러그인의 `source`는 `{ "source": "npm"|"github", ... }` 객체
-- `skills` 배열의 경로는 marketplace.json 기준 상대 경로
+- `skills` 배열의 경로는 플러그인 `source` 디렉토리 기준 상대 경로 (예: `./skills/skill-name/SKILL.md`)
 
 ### 외부 플러그인 추가
 
@@ -96,7 +96,7 @@ npm 또는 GitHub에서 외부 플러그인을 참조할 수 있음:
 {
   "name": "category-name",
   "description": "카테고리 설명",
-  "version": "1.0.0",
+  "version": "0.2.0-beta",
   "category": "category-name"
 }
 ```
@@ -154,6 +154,26 @@ SKILL.md는 500줄 이하로 유지하고, 상세 내용은 `references/` 디렉
 ## Testing
 
 ```bash
+# 전체 테스트 실행
+npm test
+
+# 또는 직접 vitest 실행
+npx vitest run
+
+# 감시 모드
+npx vitest
+```
+
+테스트 구성:
+- `src/__tests__/marketplace.test.ts` — marketplace.json 스키마 검증
+- `src/__tests__/plugin-json.test.ts` — 각 plugin.json 검증
+- `src/__tests__/skills.test.ts` — SKILL.md frontmatter, 참조 파일, 줄 수 검증
+- `src/__tests__/integrity.test.ts` — marketplace↔plugin.json↔SKILL.md 정합성
+- `src/__tests__/tidd-hook.test.ts` — TiDD 훅 스크립트 동작 검증
+
+### 플러그인 설치 테스트
+
+```bash
 # 로컬에서 marketplace 등록
 /plugin marketplace add /path/to/plugins
 
@@ -163,6 +183,22 @@ SKILL.md는 500줄 이하로 유지하고, 상세 내용은 `references/` 디렉
 # 검증
 /plugin validate .
 ```
+
+## CI/CD
+
+GitHub Actions (`/.github/workflows/ci.yml`)로 자동 테스트:
+- **트리거**: main push, PR
+- **환경**: Node.js 24, Ubuntu latest
+- **실행**: `npm ci` → `npm test`
+
+## Release Process
+
+1. 모든 테스트 통과 확인: `npm test`
+2. 버전 업데이트: `package.json`, `marketplace.json`, 각 `plugin.json`
+3. `CHANGELOG.md` 업데이트 (Keep a Changelog 형식)
+4. 커밋 → 태그: `git tag -a vX.Y.Z -m "vX.Y.Z: 설명"`
+5. Push: `git push origin main --tags`
+6. GitHub Release 생성: `gh release create vX.Y.Z`
 
 ## Troubleshooting
 
