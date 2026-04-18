@@ -6,7 +6,7 @@
 
 - **Git 워크플로 표준화** — `git-workflow`가 브랜치 전략·커밋 컨벤션·PR 관리에 대한 팀 공통 규칙을 안내합니다.
 - **티켓 기반 개발(TiDD)** — `tidd`가 "No Ticket, No Commit" 원칙을 PreToolUse 훅으로 강제하여 티켓 번호 없는 커밋을 차단합니다.
-- **의도 중심 설계** — `intent-engineering`이 INTENT.md로 프로젝트의 Why/What/Not/Learnings를 문서화하고 학습을 통해 의도를 진화시킵니다.
+- **의도 중심 설계** — `intent`가 INTENT.md로 프로젝트의 Why/What/Not/Learnings를 문서화하고 학습을 통해 의도를 진화시킵니다.
 - **서버리스 이행 조언** — `serverless-migration-advisor`가 AWS always-on 아키텍처를 서버리스+Spot 패턴으로 이행할 때 트레이드오프 평가와 단계별 계획을 제공합니다.
 - **상류-하류 연결** — 의도(왜) → 티켓(무엇을, 언제) → Git(어떻게) → 아키텍처 이행(무엇으로) 단계를 건너뛰지 않는 규율을 제공합니다.
 
@@ -16,13 +16,13 @@
 |------|------|-------------|
 | [git-workflow](skills/git-workflow) | 브랜치 전략·커밋 컨벤션·PR 관리 가이드 | "팀 Git 컨벤션 정리해줘", "커밋 메시지 규칙 잡아줘" |
 | [tidd](skills/tidd) | No Ticket, No Commit 훅 설치 및 티켓 패턴 구성 | "TiDD 설정해줘", "티켓 없는 커밋 차단해줘" |
-| [intent-engineering](skills/intent-engineering) | INTENT.md로 프로젝트 의도(Why/What/Not/Learnings) 문서화 | "INTENT.md 작성 도와줘", "프로젝트 방향 잡기" |
+| [intent](skills/intent) | INTENT.md로 프로젝트 의도(Why/What/Not/Learnings) 문서화 | "INTENT.md 작성 도와줘", "프로젝트 방향 잡기" |
 | [serverless-migration-advisor](skills/serverless-migration-advisor) | AWS always-on 아키텍처를 서버리스+Spot 패턴으로 이행하는 업스트림 어드바이저 | "EC2에서 Lambda로 이행", "ALB에서 API Gateway", "Spot 이행" |
 
 ## 사용 예시
 
 ### 예시 1 — 새 프로젝트 시작
-`intent-engineering`으로 INTENT.md를 먼저 작성하여 왜 만드는지·무엇을 만들지·무엇은 만들지 않을지를 합의합니다. 탐구와 학습이 누적되면 Learnings 섹션에 반영하여 의도를 진화시키거나 피벗·종료 판단에 근거로 삼습니다.
+`intent`로 INTENT.md를 먼저 작성하여 왜 만드는지·무엇을 만들지·무엇은 만들지 않을지를 합의합니다. 탐구와 학습이 누적되면 Learnings 섹션에 반영하여 의도를 진화시키거나 피벗·종료 판단에 근거로 삼습니다.
 
 ### 예시 2 — 티켓 기반 개발 강제
 `tidd`를 설치하면 PreToolUse 훅이 커밋 메시지·브랜치명 중 하나에 티켓 번호가 포함되어 있는지 확인하고, 없으면 커밋을 차단합니다. 티켓 패턴과 예외 규칙은 프로젝트별로 설정 가능합니다.
