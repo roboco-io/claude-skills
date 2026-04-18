@@ -286,4 +286,31 @@ Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저
 
 ---
 
+## 12. Serverless Lens — Design Principles
+
+**출처**: https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/general-design-principles.html (Snapshot 2026-04-18)
+
+> **수집 노트**: 원래 TASKS에서 "9 design principles"를 기대했으나, 2026-04-18 기준 AWS Serverless Lens 공식문서의 `general-design-principles.html` 페이지는 **7개 원칙**만 공식 수록함. `design-principles.html` 엔드포인트는 빈 페이지로 리다이렉트됨. 아래 표는 현행 공식 문서 기준 7개를 그대로 인용함.
+
+### 12.1 Principles 표
+
+| # | Title (원문) | Summary (원문 1문장) | 본 스킬에서의 활용 |
+|---|-------------|---------------------|-------------------|
+| 1 | Speedy, simple, singular | Functions are concise, short, single-purpose, and their environment may live up to their request lifecycle. | Phase 2 워크로드 특성 평가 기준 (함수 단위 분해 가능성) |
+| 2 | Think concurrent requests, not total requests | Serverless applications take advantage of the concurrency model, and tradeoffs at the design level are evaluated based on concurrency. | Phase 3 RPS → Lambda 동시성 쿼터 매핑 |
+| 3 | Share nothing | Function runtime environment and underlying infrastructure are short-lived, therefore local resources such as temporary storage is not guaranteed. | Phase 2 상태 저장성 평가 (S3/DynamoDB 위임 트리거) |
+| 4 | Assume no hardware affinity | Underlying infrastructure may change. Use code or dependencies that are hardware-agnostic. | Phase 4 타겟 런타임 선정 (GPU/특수 CPU 의존 워크로드는 비적합) |
+| 5 | Orchestrate your application with state machines, not functions | Chaining Lambda executions within the code to orchestrate the workflow of your application results in a monolithic and tightly coupled application. Instead, use a state machine to orchestrate transactions and communication flows. | Phase 4 Step Functions 도입 권고 근거 |
+| 6 | Use events to trigger transactions | Events such as writing a new Amazon S3 object or an update to a database allow for transaction execution in response to business functionalities. | Phase 4 EventBridge/SQS 기반 이벤트 드리븐 전환 근거 |
+| 7 | Design for failures and duplicates | Operations triggered from requests or events must be idempotent, as failures can occur and a given request or event can be delivered more than once. | Phase 4 멱등성 요구 (Spot 인터럽트 재시도와 결합) |
+
+### 12.2 함의
+
+- **원칙 1,2,3**: Tier 1 배치 / Tier 2 API 모두 Lambda 적합성 판단의 3대 필터.
+- **원칙 4**: GPU/특수 라이브러리 의존 워크로드 → Fargate·EC2 Spot·SageMaker로 분기.
+- **원칙 5,6**: Phase 4에서 Step Functions + EventBridge 조합을 "기본 권고"로 삼는 근거.
+- **원칙 7**: Tier 1 Spot 재시도 전략과 자연스럽게 연결. 멱등성은 Spot 이식성의 선결 조건.
+
+---
+
 *본 리서치 작성: 2026-04-18. SPEC/PLAN과 쌍을 이루며 implementation Stage 1에서 보강.*
