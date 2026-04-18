@@ -48,7 +48,8 @@
       "skills": [
         "./skills/git-workflow/SKILL.md",
         "./skills/tidd/SKILL.md",
-        "./skills/intent-engineering/SKILL.md"
+        "./skills/intent-engineering/SKILL.md",
+        "./skills/serverless-migration-advisor/SKILL.md"
       ]
     },
     {
