@@ -8,7 +8,7 @@
 
 - [x] HANDOFF.md 숙독
 - [x] SPEC.md 작성 완료
-- [ ] SPEC.md / PLAN.md / RESEARCH.md 사용자 승인 — **Stage 1 시작 전 필수**
+- [x] SPEC.md / PLAN.md / RESEARCH.md 사용자 승인 — **Stage 1 시작 전 필수**
 - [x] 기존 sagemaker-spot-training 스킬 인터페이스 확인
 - [x] 두 검증 프로젝트 경로 확보 (autoresearch, openclaw)
 - [x] AWS 공식문서 1차 수집 완료 (RESEARCH.md 참고)
@@ -188,23 +188,23 @@
 
 ## 4. 산출물 체크리스트
 
-- [ ] `plugins/workflow/skills/serverless-migration-advisor/SKILL.md`
-- [ ] `references/tradeoffs-compute.md`
-- [ ] `references/tradeoffs-spot.md`
-- [ ] `references/tradeoffs-data-layer.md`
-- [ ] `references/tradeoffs-event-driven.md`
-- [ ] `references/serverless-lens.md`
-- [ ] `references/patterns-tier1-batch.md`
-- [ ] `references/patterns-tier2-api.md`
-- [ ] `references/patterns-tier3-monolith.md`
-- [ ] `references/patterns-tier3-data.md`
-- [ ] `references/interview-bank.md`
-- [ ] `references/case-study-autoresearch.md`
-- [ ] `references/case-study-openclaw.md`
-- [ ] `references/source-insights.md`
-- [ ] `.claude-plugin/marketplace.json` 업데이트
-- [ ] `README.md` 목록 업데이트
-- [ ] `CHANGELOG.md` 업데이트
+- [x] `plugins/workflow/skills/serverless-migration-advisor/SKILL.md`
+- [x] `references/tradeoffs-compute.md`
+- [x] `references/tradeoffs-spot.md`
+- [x] `references/tradeoffs-data-layer.md`
+- [x] `references/tradeoffs-event-driven.md`
+- [x] `references/serverless-lens.md`
+- [x] `references/patterns-tier1-batch.md`
+- [x] `references/patterns-tier2-api.md`
+- [x] `references/patterns-tier3-monolith.md`
+- [x] `references/patterns-tier3-data.md`
+- [x] `references/interview-bank.md`
+- [x] `references/case-study-autoresearch.md`
+- [x] `references/case-study-openclaw.md`
+- [x] `references/source-insights.md`
+- [x] `.claude-plugin/marketplace.json` 업데이트
+- [x] `README.md` 목록 업데이트
+- [x] `CHANGELOG.md` 업데이트
 - [ ] `npm test` green
 - [ ] 로컬 설치 후 3개 시나리오 실행 통과
 
