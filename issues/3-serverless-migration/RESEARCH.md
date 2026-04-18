@@ -295,11 +295,25 @@ Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저
 - 경로: `https://github.com/serithemage/serverless-openclaw`
 - 본 RESEARCH에서 사용된 상수:
   - 월 목표 비용: **under $1-2/month** (Free Tier 시 $0.23).
-  - Lambda Container 콜드 스타트: **1.35s**.
+  - Lambda Container 콜드 스타트: **1.35s** (warm 0.12s).
   - ECS Fargate Spot 컴퓨트 절감: **70%**.
   - API Gateway 선택으로 ALB 고정비 **$18-25/월** 제거.
   - EventBridge scheduled pre-warming으로 **0s first response**.
   - Primary: Lambda Container, Fallback: ECS Fargate Spot.
+
+### 10.2.1 Numbered Principles (stable references)
+
+스킬 `references/case-study-openclaw.md`에서 인용할 고정 번호 테이블. autoresearch의 numeric insight (§10.1.1)와 구분하기 위해 **O1-O5** prefix 사용.
+
+| # | Principle from openclaw | One-line lesson | Tier usage |
+|---|------------------------|-----------------|------------|
+| O1 | Lambda Container + dual compute fallback | 기본 Lambda Container(zero-idle, 1.35s cold start), 15분 초과·고부하는 ECS Fargate Spot fallback(~70% 컴퓨트 절감) | Tier 2 API |
+| O2 | API Gateway over ALB | ALB 고정비 **$18-25/월** 제거 → per-request 청구 모델로 전환 | Tier 2 API |
+| O3 | EventBridge scheduled pre-warming | 액티브 시간대 cron으로 컨테이너 주기 호출, 월 ~$0.07 추가로 first-response 콜드스타트 페널티 제거 | Tier 2 API |
+| O4 | DynamoDB + S3 session persistence for stateless Lambda | DynamoDB에 대화/설정, S3에 세션 백업(동시성 제어) → Stateless Lambda에서 대화 지속성 확보 | Tier 2 API |
+| O5 | Free-tier first cost target | 개인 사용 **$1-2/월** (Free Tier 내 $0.23) 목표 — 전 구성요소의 zero-idle·per-request 원칙 적용 결과 | Tier 2 API |
+
+**Source**: https://github.com/serithemage/serverless-openclaw (README, 2026-04-18 snapshot)
 
 ---
 
