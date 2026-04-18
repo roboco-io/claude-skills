@@ -19,7 +19,8 @@
         "./skills/code-review/SKILL.md",
         "./skills/api-design/SKILL.md",
         "./skills/test-generator/SKILL.md",
-        "./skills/draw-diagram/SKILL.md"
+        "./skills/draw-diagram/SKILL.md",
+        "./skills/sagemaker-spot-training/SKILL.md"
       ]
     },
     {
