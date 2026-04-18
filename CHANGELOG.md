@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **serverless-migration-advisor** (workflow): AWS always-on 아키텍처를 서버리스+Spot 패턴으로 이행할 때 사용하는 업스트림 어드바이저. 5-Phase 인터뷰 → 타겟 아키텍처 매핑 → 단계별 체크리스트 리포트 생성. AWS Docs 인용 의무 + serverless-autoresearch($3.94/48실험) 및 serverless-openclaw($1/월) 검증 사례 인용. 구현 how-to는 `sagemaker-spot-training` 등으로 위임. (#3)
+
 ## [0.2.0-beta] - 2026-04-07
 
 ### Added
