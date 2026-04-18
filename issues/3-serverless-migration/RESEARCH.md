@@ -264,6 +264,32 @@ Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저
   - upstream 대비: $7~24 / 8h.
   - Karpathy 재현: val_bpb 0.9951 vs 원본 ~0.998.
 
+### 10.1.1 Numbered Insights (stable references)
+
+스킬 `references/case-study-autoresearch.md`에서 인용할 고정 번호 테이블. 제목은 `docs/insights.md` 원문 헤더를 그대로 옮김.
+
+| # | Title | One-line lesson | Tier usage |
+|---|-------|-----------------|------------|
+| 1 | Spot Capacity Varies Dramatically by Region | 동일 인스턴스 타입도 리전마다 placement score 1~9 편차 → `aws ec2 get-spot-placement-scores` 필수 | Tier 1 배치 |
+| 2 | Larger Instances Can Be Cheaper on Spot | g7e.8xlarge가 g7e.2xlarge보다 싼 경우 존재 — 사이즈=비용 가정 금지, Spot price history 직접 확인 | Tier 1 배치 |
+| 3 | DEVICE_BATCH_SIZE ≠ Token Throughput (hardware-dependent — see also #13) | TOTAL_BATCH_SIZE 고정 시 DEVICE_BATCH_SIZE만 올려도 토큰 처리량은 불변, 오히려 val_bpb 악화 (L40S/SDPA) | Tier 1 배치 |
+| 4 | Flash Attention 3 is GPU-Architecture Specific | FA3 커널은 Hopper/Ampere만 지원, Ada Lovelace(L40S)는 런타임 CUDA 오류 → 아키텍처별 fallback 필수 | Tier 1 배치 |
+| 5 | SageMaker Startup Overhead is Significant | 잡당 ~3분 시작 오버헤드 → 5분 훈련 잡의 60%가 오버헤드. 단일 잡에 실험 병합 또는 warm pool | Tier 1 배치 |
+| 6 | Quota Management is a First-Class Concern | GPU Spot 쿼터 기본값 0, g7e 자동승인 / p5·p6는 수동 검토. 마이그레이션 전 다중 리전 쿼터 사전 요청 | Tier 1 배치 |
+| 7 | SageMaker Profiler Doesn't Support All Instance Types | g7e는 `ValidationException: Profiler is currently not supported` → Estimator에 `disable_profiler=True` | Tier 1 배치 |
+| 8 | The Parallel Evolution Approach Works | 4 병렬 실험 $0.066, ~10분 wall clock — autonomous 파이프라인 검증됨 | Tier 1 배치 |
+| 9 | PyArrow Version Matters | DLC의 pyarrow 23.x와 로컬 이전 버전 불일치 시 parquet `Repetition level histogram size mismatch`. `pyarrow>=21.0.0` 필수 | Tier 1 배치 |
+| 10 | config.yaml Should Never Be in Git | 역할 ARN·프로필·리전 등 환경별·민감 정보 포함 → gitignore + `.example` 템플릿 | Tier 1 배치 (운영 원칙) |
+| 11 | Spot GPUs Are Valid Proxies for Large-Scale Training | L40S Spot HPO 결과가 H100 프로덕션에 전이 (랭킹·아키텍처 결정). 절대 BPB·최적 BS는 미전이 | Tier 1 배치 |
+| 12 | DEVICE_BATCH_SIZE ≠ More Training (L40S-specific; reversed on H100) | BS 64→128이 L40S에서는 악화, H100/FA3에서는 개선 — 하드웨어별 상반된 방향 | Tier 1 배치 |
+| 13 | Batch Size × LR × Hardware Interact — Evolved LRs Can Be BS-Specific | BS 고정한 LR 진화는 BS-조건부 최적일 뿐. 하드웨어·BS 변경 시 LR 재방문 필요. 단일 가정 점검이 20실험 탐색보다 **100× 비용효율** | Tier 1 배치 |
+| 14 | Cheap-GPU-Evolved LRs Transfer to Expensive GPUs — Sometimes Better Than Re-Evolving | L40S($0.40 24실험)에서 찾은 LR을 H100에 옮겨 upstream baseline 이하 달성. Phase-2 H100 재탐색이 오히려 악화 | Tier 1 배치 |
+| 15 | Serverless Spot Can Match or Beat Dedicated H100 Results at 44–150× Lower Cost | 229초 single Spot run ($0.16)으로 Karpathy upstream H100 8h ($7-24) val_bpb 일치 혹은 상회 | Tier 1 배치 (핵심 서사) |
+
+**Source commit (autoresearch)**: `5435b374fb5daae5eee95e3e8eb9292caacf94f8`
+**Source path**: `docs/insights.md`
+**Extraction date**: 2026-04-18
+
 ### 10.2 serverless-openclaw
 
 - 경로: `https://github.com/serithemage/serverless-openclaw`
