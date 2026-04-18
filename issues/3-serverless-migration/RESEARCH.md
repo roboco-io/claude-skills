@@ -313,4 +313,173 @@ Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저
 
 ---
 
+## 13. Lambda SnapStart — 트레이드오프 사실
+
+**출처**: https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html (Snapshot 2026-04-18)
+
+### 13.1 정량
+
+| 항목 | 값 |
+|------|-----|
+| 지원 런타임 | **Java 11+, Python 3.12+, .NET 8+** (Node.js, Ruby, OS-only, 컨테이너 이미지 미지원) |
+| 복원 지연 | "as low as sub-second" — 저지연 최적 시나리오에서 1초 미만 |
+| 적용 단위 | **게시된 버전(published version) 또는 버전을 가리키는 alias** (unqualified `$LATEST` 불가) |
+| 추가 비용 | **Java: 무료** (요청·실행시간·메모리만 청구). **Python/.NET: 캐시 + 복원 비용** 추가 (메모리 기반, 리전 단가) |
+| 최소 캐시 청구 | Python/.NET: **최소 3시간분** (함수가 active 상태 유지 시 지속 과금) |
+| 스냅샷 보존 (Java) | **14일 미호출 시 Inactive** → 다음 호출 시 재초기화 필요 (`SnapStartNotReadyException`) |
+| 미지원 조합 | Provisioned Concurrency, Amazon EFS, 512MB 초과 ephemeral storage |
+| 지원 리전 | 모든 상용 리전 (ap-southeast-NZ, ap-east-Taipei 제외) |
+
+### 13.2 제외 / 주의 사항
+
+- **VPC ENI 수명주기**: 스냅샷에 포함되지 않음. 복원 시 ENI 재연결 지연 가능.
+- **고유성(Uniqueness) 함정**: 스냅샷 시점의 난수·UUID·TLS 세션 키·시드 값이 모든 복원 인스턴스에 복제됨 → 보안 크리티컬. 초기화 단계가 아닌 **핸들러 내부에서 생성** 권장.
+- **런타임 훅**: `beforeCheckpoint` / `afterRestore` 훅으로 uniqueness 및 커넥션 재확립 처리 (Java CRaC API, Python/.NET 전용 훅).
+- **네트워크 커넥션**: DB/Redis/HTTP 커넥션 상태는 복원 후 **보장되지 않음**. AWS SDK 커넥션은 자동 재개.
+- **임시 데이터**: 캐시된 타임스탬프/임시 자격증명은 핸들러에서 새로 갱신.
+- **SDK 자격증명**: SnapStart 활성 시 Lambda는 access-key 환경변수 대신 `AWS_CONTAINER_CREDENTIALS_FULL_URI` 사용 (복원 전 만료 방지).
+- **Provisioned Concurrency 상호배타**: 엄격한 콜드스타트 SLA가 필요하면 PC, 그 외는 SnapStart.
+
+### 13.3 함의
+
+- **Tier 2 API (Java/Python/.NET)**: 콜드 스타트가 SLA에 영향을 주는 사용자 대면 API에 1순위 권고.
+- **네트워크 의존 초기화**: VPC 안에서 RDS/Redis 커넥션을 초기화하는 함수는 SnapStart 효과가 제한적 — ENI 연결이 병목.
+- **uniqueness 함정**: 금융/인증 계열에서는 스냅샷 복원 후 반드시 fresh entropy 재생성 훅 의무화.
+- **Java 이점**: 별도 비용 없이 활성화 가능 → Spring Boot Lambda 이식의 표준 권고.
+
+---
+
+## 14. Aurora Serverless v2 — 트레이드오프 사실
+
+**출처**: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.html (Snapshot 2026-04-18)
+
+### 14.1 정량
+
+| 항목 | 값 |
+|------|-----|
+| ACU 범위 | 엔진/플랫폼 버전별 `0.5-128` → `0.5-256` → **`0-256`** (최신 Aurora MySQL 3.08.0+ / PostgreSQL 13.15+, 14.12+, 15.7+, 16.3+) |
+| ACU 정의 | 1 ACU ≈ **2 GiB RAM + 상응 CPU·네트워킹** |
+| ACU 증분 | **0.5 ACU** 단위, 초 단위 연속 측정 |
+| 스케일 반응성 | 수 초 이내, 온라인 스케일 (downtime 없음) |
+| Auto-pause | min=0 설정 시 idle 후 자동 pause → 새 커넥션 도착 시 즉시 resume (스토리지 비용은 계속) |
+| 콜드 스타트 | v1 대비 **제거** — 지속 실행 인스턴스. 단 auto-pause → resume 시 수 초 재개 지연 가능 |
+| 최소 용량 청구 | 각 writer/reader 인스턴스별 `min ACU × 가동시간` (클러스터 2개 × min=1 → 최소 2 ACU 항상 과금) |
+| Provisioned 호환 | 동일 클러스터 내 Provisioned + Serverless v2 **혼합** 가능 (리더·라이터 모두). 인스턴스 클래스 변경으로 상호 전환 |
+| Multi-AZ | 지원 (Provisioned 클러스터와 동일한 failover 매커니즘) |
+| Global Database | 지원 (v2 전용 리전 복제) |
+| RDS Proxy | 지원 (Lambda ↔ Aurora 연결 풀링 최적 조합) |
+| 미지원 | Database Activity Streams, Cluster Cache Management (Aurora PG), Aurora Auto Scaling (reader 인스턴스로 대체) |
+| Promotion Tier | 0-1: writer와 동일 용량 자동 추적 / 2-15: 독립 스케일 |
+
+### 14.2 v1 대비 차이
+
+- v1: 콜드 스타트 존재, 자동 pause/resume, ACU 2배수 스텝, 수 분 단위 스케일.
+- v2: 인스턴스 지속, 0.5 ACU 단위, 초 단위 스케일, Global Database 호환.
+
+### 14.3 함의
+
+- **Tier 3 RDS → Aurora 이행의 기본 경로**: DB 엔진 변경 없이 서버리스 과금 모델 도입.
+- **바닥 비용 함정**: min ACU > 0 이면 idle 시에도 과금. 완전 zero-idle 원할 경우 min=0 + auto-pause 활용 (단, resume 지연 감수).
+- **burst 트래픽 대응**: 0.5 ACU 단위 스케일로 Lambda 동시성 급증에 연동 가능.
+- **혼합 운영**: 레거시 Provisioned 리더 유지 + Serverless v2 라이터 도입 점진 전환 가능.
+
+---
+
+## 15. DynamoDB Capacity Modes — 트레이드오프 사실
+
+**출처**: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html (Snapshot 2026-04-18)
+
+### 15.1 On-Demand vs Provisioned
+
+| 항목 | On-Demand | Provisioned |
+|------|-----------|-------------|
+| 청구 단위 | 요청당 (Read Request Unit / Write Request Unit) | 시간당 용량 예약 (RCU/WCU × hour) |
+| RRU/WRU 정의 | 1 RRU = 최대 4KB strongly consistent read 1회 또는 eventually consistent read 2회 · 1 WRU = 최대 1KB write 1회 |
+| 스케일링 | 자동, 신규 테이블도 즉시 4,000 writes/sec + 12,000 reads/sec 지원 | Auto Scaling으로 min/max 범위 내 자동 조정 (반응 수 분) |
+| 피크 대응 | 이전 피크의 **2배**까지 즉시 허용. 30분 이내 2배 초과 시 throttle 가능 (pre-warming으로 사전 증가 가능) | max 이상 throttled, burst capacity (5분) 완충 |
+| 바닥 비용 | 0 (호출 없으면 $0) | min RCU/WCU × 가동시간 |
+| Reserved Capacity | 불가 | 1년 **최대 54%** / 3년 **최대 77%** 할인 (100 RCU/WCU 단위) |
+| 모드 전환 | Provisioned → On-Demand: 24시간당 최대 4회 / On-Demand → Provisioned: 언제든 |
+| 기본 쿼터 | 계정당 합산 **40,000 RCU/WCU**, On-Demand 테이블당 max 40,000 RCU + 40,000 WCU |
+| 선택적 max 설정 | On-Demand에 **per-table max** 설정 가능 (비용 폭주 방지) |
+| 적합 워크로드 | 예측 불가·스파이키·서버리스·신규 앱 (**기본 권고**) | 안정·예측 가능·지속 고부하 (Reserved 활용 시 비용 절감) |
+
+### 15.2 함의
+
+- **Tier 2 API 기본 권고**: On-Demand — Lambda 동시성 확장과 자연 매칭, idle 시 $0.
+- **예측 가능 고부하**: Provisioned + Reserved Capacity로 On-Demand 대비 50~70% 절감 가능.
+- **하이브리드**: GSI를 다른 capacity mode로 설정 가능 → 조회 빈도 차이 반영.
+- **전환 정책**: 24시간 전환 제한은 마이그레이션 테스트 기간 동안 고려해야 함.
+
+---
+
+## 16. S3 Express One Zone — 트레이드오프 사실
+
+**출처**: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-one-zone.html (Snapshot 2026-04-18)
+**보조 출처**: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
+
+### 16.1 특성
+
+| 항목 | 값 |
+|------|-----|
+| AZ 스코프 | **단일 AZ** (가용성 SLA 99.95%). 다중 디바이스 중복 저장이지만 AZ 간 복제 없음 |
+| 지연 시간 | 한 자리 ms (S3 Standard 대비 ~10x 빠름) |
+| 처리량 | 버킷당 **읽기 200,000 TPS / 쓰기 100,000 TPS** (쿼터 증가 가능) |
+| 버킷 타입 | **Directory bucket** (S3 general purpose bucket과 별도 스키마) |
+| 버킷 네이밍 | `{base-name}--{zone-id}--x-s3` (예: `my-bucket--usw2-az1--x-s3`), 3-63자 |
+| 스토리지 구조 | **계층형 디렉토리** (slash delimiter로 폴더 자동 생성), GPB의 flat prefix와 다름 |
+| 요청 가격 | Standard 대비 **약 50% 저렴** (per-request) |
+| 스토리지 가격 | Standard 대비 단가 유사 혹은 소폭 저렴 (단위 per-GB 비용은 리전별 차이). **비용 이점의 주 원천은 요청 단가** |
+| 일관성 | Strong read-after-write (기본) |
+| 암호화 | SSE-S3(자동) 또는 SSE-KMS. **SSE-C 미지원** |
+| ACL | 항상 bucket-owner-enforced (ACL 비활성) |
+| Block Public Access | **항상 On** (해제 불가) |
+| 데이터 전송 | 동일 AZ 내 EC2/ECS/Lambda에서 호출 시 DTO 비용 없음 |
+| 쿼터 | 계정당 리전별 디렉토리 버킷 **100개** (증가 가능) |
+| 기능 제한 | 버저닝 없음, Lifecycle 일부, CRR/SRR 없음, Intelligent-Tiering·Glacier 불가 |
+
+### 16.2 권장 워크로드
+
+- **적합**: 비디오 편집/크리에이티브, ML 훈련 데이터 random access, 실시간 분석, 인터랙티브 앱, shuffle/spill, 분석 중간 결과.
+- **부적합**: 장기 아카이브, 다중 리전 재해복구, 규제 요구 다내구성 저장, 외부 공개 CDN 오리진, ACL 필요 워크로드.
+
+### 16.3 함의
+
+- **Tier 1 배치 워크로드 shuffle storage**: autoresearch nanoGPT 훈련 데이터 로딩 가속 후보. 단, EC2/Fargate Spot과 **동일 AZ** 배치 필수.
+- **단일 AZ 제약**: AZ 장애 시 데이터 유실 가능 → 원본은 Standard/Glacier에 별도 보관, 중간 결과만 Express.
+- **비용 역전 함정**: 저빈도 접근 시 Standard 대비 **총비용 증가** (요청 단가 절감은 요청 빈도에 비례).
+- **네이밍 규칙**: `--{zone-id}--x-s3` 패턴 필수. IaC 템플릿/버킷명 생성 로직에 강제.
+- **CreateSession auth 모델**: 객체 오퍼레이션 전 `s3express:CreateSession` 필요 → SDK 버전·IAM 정책 업그레이드 필요.
+
+---
+
+## 17. Step Functions — Standard vs Express
+
+**출처**: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-standard-vs-express.html (Snapshot 2026-04-18)
+
+### 17.1 비교
+
+| 항목 | Standard | Async Express | Sync Express |
+|------|----------|---------------|--------------|
+| 최대 실행 시간 | **1년** | 5분 | 5분 (콘솔 `StartSyncExecution`은 60s 만료, SDK/CLI는 5분까지) |
+| 실행 시맨틱 | **Exactly-once** (내부 상태 영속) | **At-least-once** (상태 비영속, 중복 가능) | **At-most-once** (상태 비영속, 재시도 없음) |
+| 실행 이력 | API로 조회, 콘솔 시각적 디버깅, **90일 보관** (30일로 단축 가능) | Step Functions 미포착 → CloudWatch Logs 활성화 필수 | CloudWatch Logs 활성화 필수 |
+| 처리량 | state transition rate 제한 (account quota) | 초당 수만~수십만 실행 | account 용량 제한과 **분리** (자동 스케일) |
+| 청구 모델 | **per state transition** | per execution × duration × memory | per execution × duration × memory |
+| 지원 통합 | 모든 서비스 통합 + `.sync`, `.waitForTaskToken` | `.sync`, `.waitForTaskToken` 미지원 | `.sync`, `.waitForTaskToken` 미지원 |
+| Distributed Map / Activities | 지원 | 미지원 | 미지원 |
+| Idempotency | 동일 이름 재실행 시 자동 idempotent 응답 | 자동 관리 **없음** — 동명 동시 실행 가능 | 자동 관리 없음, 예외 시 재실행 없음 |
+
+### 17.2 함의
+
+- **Tier 1 배치 분해**: 15분 초과 배치는 Standard 워크플로로 분해. Spot 재시도 로직을 상태기계에 명시하고 exactly-once 보장 활용.
+- **Tier 2 API 이벤트 후처리**: Async Express — 짧은 fan-out·스트리밍 이벤트, API 응답 후처리.
+- **Tier 2 API 동기 마이크로서비스**: Sync Express — API Gateway 뒤 실시간 워크플로, at-most-once 수용 가능할 때.
+- **at-least-once 함정**: Async Express는 중복 실행 가능 → 멱등성 설계(§12 원칙 7) 전제 필수. 비멱등 작업(예: 결제)은 Standard 선택.
+- **5분 한계**: Express로는 장시간 워크플로 불가. Standard로 분할하거나 `StartExecution`으로 체인.
+- **실행 이력**: 감사·디버깅 필요 시 Standard (90일 retention, 30일로 축소 요청 가능). 비용 우선이면 Express + 명시적 CloudWatch Logs.
+- **Workflow type immutable**: state machine 생성 후 Standard↔Express 변경 불가 → 설계 초기 결정.
+
+---
+
 *본 리서치 작성: 2026-04-18. SPEC/PLAN과 쌍을 이루며 implementation Stage 1에서 보강.*
