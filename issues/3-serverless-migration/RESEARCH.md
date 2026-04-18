@@ -202,37 +202,7 @@ Managed Spot은 Hyperparameter Tuning에서도 사용 가능.
 
 ## 8. 추가 수집 우선순위 (Stage 1)
 
-### 8.1 SnapStart
-Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저장, Restore 시 수 ms 내 재개.
-- 제약: 버전된 함수만, 런타임 제한, 네트워크 초기화 주의.
-
-### 8.2 Aurora Serverless v2
-- ACU 단위 스케일링 (0.5 ~ 256 ACU 범위).
-- Cold start 없음 (Serverless v1 대비).
-- 최소 ACU > 0 시 바닥 비용 발생.
-- Tier 3 RDS → Aurora 이행의 기본 경로.
-
-### 8.3 DynamoDB
-- On-Demand vs Provisioned 트레이드오프.
-- 단일 테이블 디자인의 쿼리 유연성 감소.
-- Strong vs Eventual consistency 선택.
-- RCU/WCU 모델.
-
-### 8.4 S3 Express One Zone
-- 단일 AZ, 10x 저지연.
-- 디렉토리 버킷 네이밍.
-- 가격 모델 차이.
-- 고처리량 배치 워크로드 용.
-
-### 8.5 Step Functions
-- Standard vs Express:
-  - Standard: 최대 1년, 시각적 워크플로, 정확히 한 번 실행, 상대적 고비용.
-  - Express: 최대 5분, 초당 10만 실행, at-least-once, 저비용.
-
-### 8.6 EventBridge vs SQS vs Kinesis
-- EventBridge: 이벤트 라우팅, 풍부한 필터링, 스키마 레지스트리.
-- SQS: 작업 큐, FIFO 옵션, 긴 폴링.
-- Kinesis: 스트리밍, 샤드 기반, 순서 보장.
+> ✅ **해결됨** (2026-04-18): §8.1~8.5의 모든 preview 항목은 §13 (SnapStart), §14 (Aurora Serverless v2), §15 (DynamoDB), §16 (S3 Express One Zone), §17 (Step Functions)에서 전체 스냅샷으로 대체되었다. §8.6 (EventBridge/SQS/Kinesis)은 Stage C `tradeoffs-event-driven.md` 작성 시 AWS Docs 재수집 대상으로 이월.
 
 ---
 
@@ -312,17 +282,21 @@ Lambda Java/Python 콜드 스타트 대안. 초기화 결과를 스냅샷에 저
 | O3 | EventBridge scheduled pre-warming | 액티브 시간대 cron으로 컨테이너 주기 호출, 월 ~$0.07 추가로 first-response 콜드스타트 페널티 제거 | Tier 2 API |
 | O4 | DynamoDB + S3 session persistence for stateless Lambda | DynamoDB에 대화/설정, S3에 세션 백업(동시성 제어) → Stateless Lambda에서 대화 지속성 확보 | Tier 2 API |
 | O5 | Free-tier first cost target | 개인 사용 **$1-2/월** (Free Tier 내 $0.23) 목표 — 전 구성요소의 zero-idle·per-request 원칙 적용 결과 | Tier 2 API |
+| O6 | CloudFront + S3 for web UI | 정적 호스팅으로 서버 비용 제거 — 웹 UI를 S3 버킷 + CloudFront 배포로 서빙하여 EC2/Lambda 런타임 없이 0 idle 비용 달성 | Tier 2 API |
+
+*주: TASKS.md 템플릿의 O5(CloudFront+S3)는 O6으로 이동, Free-tier 목표를 O5로 승격 — 비용 설계 원칙이 케이스 스터디 인용에서 더 빈번하기 때문.*
 
 **Source**: https://github.com/serithemage/serverless-openclaw (README, 2026-04-18 snapshot)
 
 ---
 
-## 11. Open issues
+## 11. Open issues (after Stage A)
 
-1. **Serverless Lens 9 설계원칙 텍스트 원문** 수집 (Stage 1 우선).
-2. **Aurora Serverless v2 / DynamoDB / S3 Express / Step Functions / EventBridge** 공식문서 스냅샷 (Stage 1).
-3. **Lambda SnapStart** 한계·지원 런타임 (Stage 1).
-4. **AWS prescriptive guidance**의 Strangler Fig / CDC migration URL 수집 (Stage 4).
+~~1. Serverless Lens 9 설계원칙 텍스트 원문 수집~~ → §12에서 7개 원칙으로 해결 (AWS 본문이 9→7로 축소됨)
+~~2. Aurora Serverless v2 / DynamoDB / S3 Express / Step Functions / EventBridge 공식문서 스냅샷~~ → §14/§15/§16/§17에서 해결 (EventBridge은 Stage C 이월)
+~~3. Lambda SnapStart 한계·지원 런타임~~ → §13에서 해결
+4. AWS prescriptive guidance의 Strangler Fig / CDC migration URL 수집 (Stage 4).
+5. §8.6 EventBridge / SQS / Kinesis 상세 스냅샷 — Stage C `tradeoffs-event-driven.md` 작성 시 수집 예정.
 
 ---
 
