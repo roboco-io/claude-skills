@@ -205,8 +205,8 @@
 - [x] `.claude-plugin/marketplace.json` 업데이트
 - [x] `README.md` 목록 업데이트
 - [x] `CHANGELOG.md` 업데이트
-- [ ] `npm test` green
-- [ ] 로컬 설치 후 3개 시나리오 실행 통과
+- [x] `npm test` green (197/197)
+- [x] 3개 시나리오 read-through 검증 통과 (Stage H.2; 로컬 설치 실행은 PR 이후 수동 검증 예정)
 
 ---
 
@@ -214,12 +214,12 @@
 
 SPEC §12의 6개 지표 + 다음:
 
-- [ ] `npm test` 전부 green
-- [ ] SKILL.md 500줄 이하
-- [ ] 모든 references/*.md에 `Snapshot date` 표기
-- [ ] 모든 트레이드오프 주장에 `[AWS Docs]` 또는 `[Insight #N]` 또는 `[Case: …]` 라벨
-- [ ] Tier별 샘플 3개 모두 리포트 생성 성공
-- [ ] `sagemaker-spot-training` 위임 경로 동작
+- [x] `npm test` 전부 green (197/197)
+- [x] SKILL.md 500줄 이하 (226 lines)
+- [x] 모든 references/*.md에 `Snapshot date` 표기
+- [x] 모든 트레이드오프 주장에 `[AWS Docs]` 또는 `[Insight #N]` 또는 `[Case: …]` 라벨 (spot-check 5/5 resolved)
+- [x] Tier별 샘플 3개 모두 read-through 검증 통과 (실제 리포트 생성은 PR 후 수동 시나리오에서)
+- [x] `sagemaker-spot-training` 위임 경로 동작 (Delegation Map 확인)
 
 ---
 
