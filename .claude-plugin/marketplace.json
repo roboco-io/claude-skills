@@ -63,7 +63,8 @@
         "./skills/korean-docs/SKILL.md",
         "./skills/qa/SKILL.md",
         "./skills/qa-list/SKILL.md",
-        "./skills/qa-merge/SKILL.md"
+        "./skills/qa-merge/SKILL.md",
+        "./skills/llm-wiki/SKILL.md"
       ]
     },
     {

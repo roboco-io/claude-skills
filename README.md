@@ -53,6 +53,7 @@ Git 워크플로우 및 협업 관련
 | [qa](plugins/documentation/skills/qa) | 기술/수학적 개념 Q&A 기록 |
 | [qa-list](plugins/documentation/skills/qa-list) | 저장된 Q&A 문서 목록 표시 |
 | [qa-merge](plugins/documentation/skills/qa-merge) | Q&A 문서를 통합 레퍼런스로 병합 |
+| [llm-wiki](plugins/documentation/skills/llm-wiki) | Karpathy LLM Wiki 패턴 - 프로젝트 문서를 컴파일 위키로 유지 (qmd 하이브리드 검색, Obsidian 호환) |
 
 ### Memory
 
