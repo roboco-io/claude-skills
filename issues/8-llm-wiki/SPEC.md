@@ -187,7 +187,7 @@ argument-hint: [init|ingest|query|lint|sync|export|qmd-index|lancedb-sync] [args
 - 검사 항목:
   - `[[wiki-link]]` 대상 존재 여부
   - 고아 페이지 (INDEX.md에서 링크되지 않음)
-  - frontmatter 필수 필드 (`title`, `created`, `updated`, `status`)
+  - frontmatter 필수 필드 (`title`, `updated`) — `created`, `status`는 권장(필수 아님)
   - confidence 신뢰도 낮은 페이지 플래그
 - 출력: 표준출력 리포트 + exit code (0=green, 1=issues)
 
