@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Claude Code 플러그인 모음 - Skills, Commands, Agents, Hooks",
-    "version": "0.2.0-beta"
+    "version": "0.3.0-beta"
   },
   "plugins": [
     {
       "name": "development",
       "source": "./plugins/development",
-      "version": "0.2.0-beta",
+      "version": "0.3.0-beta",
       "description": "코드 리뷰, API 설계, 테스트 생성 등 개발 관련 스킬",
       "category": "development",
       "skills": [
@@ -26,7 +26,7 @@
     {
       "name": "security",
       "source": "./plugins/security",
-      "version": "0.2.0-beta",
+      "version": "0.3.0-beta",
       "description": "OWASP Top 10 2025 기반 보안 리뷰, AWS Well-Architected Framework 리뷰",
       "category": "security",
       "skills": [
@@ -43,7 +43,7 @@
     {
       "name": "workflow",
       "source": "./plugins/workflow",
-      "version": "0.2.0-beta",
+      "version": "0.3.0-beta",
       "description": "Git 워크플로우, 브랜치 전략, 커밋 컨벤션",
       "category": "workflow",
       "skills": [
@@ -56,7 +56,7 @@
     {
       "name": "documentation",
       "source": "./plugins/documentation",
-      "version": "0.2.0-beta",
+      "version": "0.3.0-beta",
       "description": "한국어 기술 문서 작성 및 Q&A 기록",
       "category": "documentation",
       "skills": [
