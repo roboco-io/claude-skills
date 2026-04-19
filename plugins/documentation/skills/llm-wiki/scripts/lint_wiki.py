@@ -54,38 +54,33 @@ def lint(wiki_dir):
 
     for md in md_files:
         text = md.read_text(encoding='utf-8')
+        is_index_or_log = md.name in ('index.md', 'log.md')
 
-        if md.name in ('index.md', 'log.md'):
-            for link in WIKILINK_RE.findall(text):
-                referenced.add(link.strip())
-                target = link.strip()
-                if target not in page_stems:
+        if not is_index_or_log:
+            fm = parse_frontmatter(text)
+
+            for field in REQUIRED_FM:
+                if field not in fm or not fm[field]:
                     issues.append(
-                        f"{md.relative_to(wiki_dir)}: broken link [[{target}]]"
+                        f"{md.relative_to(wiki_dir)}: frontmatter `{field}` missing"
                     )
-            continue
 
-        fm = parse_frontmatter(text)
-
-        for field in REQUIRED_FM:
-            if field not in fm or not fm[field]:
+            confidence_raw = fm.get('confidence', '')
+            confidence = confidence_raw.lower() if isinstance(confidence_raw, str) else ''
+            if confidence in ('low', 'tentative'):
                 issues.append(
-                    f"{md.relative_to(wiki_dir)}: frontmatter `{field}` missing"
+                    f"{md.relative_to(wiki_dir)}: low-confidence page flagged"
                 )
-
-        confidence = fm.get('confidence', '').lower() if isinstance(fm.get('confidence', ''), str) else ''
-        if confidence in ('low', 'tentative'):
-            issues.append(
-                f"{md.relative_to(wiki_dir)}: low-confidence page flagged"
-            )
 
         for link in WIKILINK_RE.findall(text):
             target = link.strip()
-            referenced.add(target)
             if target not in page_stems:
                 issues.append(
                     f"{md.relative_to(wiki_dir)}: broken link [[{target}]]"
                 )
+            elif not is_index_or_log:
+                # Only count references from content pages toward orphan detection
+                referenced.add(target)
 
     orphans = page_stems - referenced
     for orphan in sorted(orphans):

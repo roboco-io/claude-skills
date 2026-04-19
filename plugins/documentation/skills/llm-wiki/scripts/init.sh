@@ -60,7 +60,13 @@ if [ -f "$CLAUDE_MD" ]; then
   fi
 else
   if [ -f "$CLAUDE_BLOCK_TPL" ]; then
-    cat "$CLAUDE_BLOCK_TPL" > "$CLAUDE_MD"
+    {
+      echo "# CLAUDE.md"
+      echo ""
+      echo "This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository."
+      echo ""
+      cat "$CLAUDE_BLOCK_TPL"
+    } > "$CLAUDE_MD"
     echo "  ✓ CLAUDE.md 생성"
   else
     echo "  ⚠ CLAUDE.md 블록 템플릿 미존재 — CLAUDE.md 생성 건너뜀"

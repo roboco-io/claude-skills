@@ -88,9 +88,11 @@
 
 순서대로 실행:
 
+> 참고: 아래 명령은 스킬이 내부적으로 호출하는 경로로, 사용자가 직접 실행할 일은 드뭅니다. 스킬 설치 경로에 따라 실제 경로는 다를 수 있습니다.
+
 ```bash
-python .claude/skills/llm-wiki/scripts/sync_index.py
-python .claude/skills/llm-wiki/scripts/lint_wiki.py
+python scripts/sync_index.py
+python scripts/lint_wiki.py
 ```
 
 **결과 처리:**
