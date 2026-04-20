@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.3.0-beta] - 2026-04-19
+## [0.3.0] - 2026-04-20
+
+베타 릴리즈(`v0.3.0-beta`, 2026-04-19) 내용을 프리릴리즈 단계 없이 정식 릴리즈로 승격. 기능 변경 없음.
 
 ### Added
 
