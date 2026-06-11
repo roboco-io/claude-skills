@@ -16,11 +16,11 @@
       "description": "코드 리뷰, API 설계, 테스트 생성 등 개발 관련 스킬",
       "category": "development",
       "skills": [
-        "./skills/code-review/SKILL.md",
-        "./skills/api-design/SKILL.md",
-        "./skills/test-generator/SKILL.md",
-        "./skills/draw-diagram/SKILL.md",
-        "./skills/sagemaker-spot-training/SKILL.md"
+        "./skills/code-review",
+        "./skills/api-design",
+        "./skills/test-generator",
+        "./skills/draw-diagram",
+        "./skills/sagemaker-spot-training"
       ]
     },
     {
@@ -30,14 +30,14 @@
       "description": "OWASP Top 10 2025 기반 보안 리뷰, AWS Well-Architected Framework 리뷰",
       "category": "security",
       "skills": [
-        "./skills/owasp-review/SKILL.md",
-        "./skills/aws-well-architected/SKILL.md",
-        "./skills/aws-wa-operational-excellence/SKILL.md",
-        "./skills/aws-wa-security/SKILL.md",
-        "./skills/aws-wa-reliability/SKILL.md",
-        "./skills/aws-wa-performance/SKILL.md",
-        "./skills/aws-wa-cost/SKILL.md",
-        "./skills/aws-wa-sustainability/SKILL.md"
+        "./skills/owasp-review",
+        "./skills/aws-well-architected",
+        "./skills/aws-wa-operational-excellence",
+        "./skills/aws-wa-security",
+        "./skills/aws-wa-reliability",
+        "./skills/aws-wa-performance",
+        "./skills/aws-wa-cost",
+        "./skills/aws-wa-sustainability"
       ]
     },
     {
@@ -47,10 +47,10 @@
       "description": "Git 워크플로우, 브랜치 전략, 커밋 컨벤션",
       "category": "workflow",
       "skills": [
-        "./skills/git-workflow/SKILL.md",
-        "./skills/tidd/SKILL.md",
-        "./skills/intent/SKILL.md",
-        "./skills/serverless-migration-advisor/SKILL.md"
+        "./skills/git-workflow",
+        "./skills/tidd",
+        "./skills/intent",
+        "./skills/serverless-migration-advisor"
       ]
     },
     {
@@ -60,11 +60,11 @@
       "description": "한국어 기술 문서 작성 및 Q&A 기록",
       "category": "documentation",
       "skills": [
-        "./skills/korean-docs/SKILL.md",
-        "./skills/qa/SKILL.md",
-        "./skills/qa-list/SKILL.md",
-        "./skills/qa-merge/SKILL.md",
-        "./skills/llm-wiki/SKILL.md"
+        "./skills/korean-docs",
+        "./skills/qa",
+        "./skills/qa-list",
+        "./skills/qa-merge",
+        "./skills/llm-wiki"
       ]
     },
     {
