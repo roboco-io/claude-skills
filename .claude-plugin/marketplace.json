@@ -68,6 +68,13 @@
       ]
     },
     {
+      "name": "claude-wiki",
+      "source": { "source": "github", "repo": "roboco-io/claude-wiki" },
+      "version": "0.2.0",
+      "description": "에이전트 친화적 코드베이스 위키 생성·유지 — /claude-wiki:init, /claude-wiki:update (API 키 불필요, Claude 구독만으로 동작)",
+      "category": "documentation"
+    },
+    {
       "name": "ralph-mem",
       "source": {
         "source": "npm",
